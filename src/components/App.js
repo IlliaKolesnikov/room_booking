@@ -33,10 +33,32 @@ const rows = [
   createData('Пятница', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00'),
 ];
 
-function SimpleTable(props) {
-  const { classes } = props;
+class SimpleTable extends React.Component {
+  state = { data: [] }
 
-  return (
+  handleClick = (index, value) => {
+    localStorage.clear();
+    const arr = this.state.data;
+    let obj = { index: index, value: value, taken: true };
+    arr.push(JSON.stringify(obj) );
+    this.setState({ data: arr });
+    localStorage.setItem('data', this.state.data);
+  };
+
+  check = (index, value) => {
+    let arrayToCheck = this.state.data;
+    let isCheck = false;
+    arrayToCheck.forEach((item) => {
+      if(JSON.parse(item).index === index && JSON.parse(item).value === value)  {
+        isCheck = !isCheck
+      }
+    });
+    return isCheck
+  }
+
+  render() {
+    const { classes } = this.props;
+    return (
     <Paper className={classes.root}>
       <Table className={classes.table}>
         <TableBody>
@@ -47,18 +69,22 @@ function SimpleTable(props) {
                   {row.name}
                 </TableCell>
                 <TableCell numeric>
-                <Button>
+                <Button color={this.check(row.id, row.calories) ? 'primary' : 'secondary'} onClick={() => this.handleClick(row.id, row.calories)}>
                 {row.calories}
                 </Button>
                 </TableCell>
-                <TableCell numeric><Button>{row.fat}</Button></TableCell>
-                <TableCell numeric><Button>{row.carbs}</Button></TableCell>
-                <TableCell numeric><Button>{row.protein}</Button></TableCell>
-                <TableCell numeric><Button>{row.kasha}</Button></TableCell>
-                <TableCell numeric><Button>{row.kefir}</Button></TableCell>
-                <TableCell numeric><Button>{row.ryazhanka}</Button></TableCell>
-                <TableCell numeric><Button>{row.seledka}</Button></TableCell>
-                <TableCell numeric><Button>{row.grudka}</Button></TableCell>
+                <TableCell numeric>
+                <Button color={this.check(row.id, row.fat) ? 'primary' : 'secondary'} onClick={() => this.handleClick(row.id, row.fat)}>
+                {row.fat}
+                </Button>
+                </TableCell>
+                <TableCell numeric><Button color={this.check(row.id, row.carbs) ? 'primary' : 'secondary'} onClick={() => this.handleClick(row.id, row.carbs)}>{row.carbs}</Button></TableCell>
+                <TableCell numeric><Button color={this.check(row.id, row.protein) ? 'primary' : 'secondary'} onClick={() => this.handleClick(row.id, row.protein)}>{row.protein}</Button></TableCell>
+                <TableCell numeric><Button color={this.check(row.id, row.kasha) ? 'primary' : 'secondary'} onClick={() => this.handleClick(row.id, row.kasha)}>{row.kasha}</Button></TableCell>
+                <TableCell numeric><Button color={this.check(row.id, row.kefir) ? 'primary' : 'secondary'} onClick={() => this.handleClick(row.id, row.kefir)}>{row.kefir}</Button></TableCell>
+                <TableCell numeric><Button color={this.check(row.id, row.ryazhanka) ? 'primary' : 'secondary'} onClick={() => this.handleClick(row.id, row.ryazhanka)}>{row.ryazhanka}</Button></TableCell>
+                <TableCell numeric><Button color={this.check(row.id, row.seledka) ? 'primary' : 'secondary'} onClick={() => this.handleClick(row.id, row.seledka)}>{row.seledka}</Button></TableCell>
+                <TableCell numeric><Button color={this.check(row.id, row.grudka) ? 'primary' : 'secondary'} onClick={() => this.handleClick(row.id, row.grudka)}>{row.grudka}</Button></TableCell>
               </TableRow>
             );
           })}
@@ -66,6 +92,7 @@ function SimpleTable(props) {
       </Table>
     </Paper>
   );
+        }
 }
 
 SimpleTable.propTypes = {
