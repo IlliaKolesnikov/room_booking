@@ -21,24 +21,28 @@ const styles = theme => ({
 });
 
 let id = 0;
-function createData(day, calories, fat, carbs, protein, kasha, kefir, ryazhanka, seledka, grudka) {
+const arrayWithTime = ['10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00'];
+
+function createData(day) {
   id += 1;
-  return { id, day, calories, fat, carbs, protein, kasha, kefir, ryazhanka, seledka, grudka };
+  return { id, day, arrayWithTime };
 }
 
+
 const rows = [
-  createData('Понедельник', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00'),
-  createData('Вторник', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00'),
-  createData('Среда', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00'),
-  createData('Четверг', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00'),
-  createData('Пятница', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00'),
+  createData('Понедельник', arrayWithTime),
+  createData('Вторник', arrayWithTime),
+  createData('Среда', arrayWithTime),
+  createData('Четверг', arrayWithTime),
+  createData('Пятница', arrayWithTime),
 ];
+
 class MyTable extends React.Component {
   state = { data: LocalStorage.get('time') || [] }
-
+  
   handleClick = (index, value) => {
     const arr = this.state.data;
-    const obj = { index: index, value: value, taken: true };
+    const obj = { index: index, value: value};
     arr.push(JSON.stringify(obj));
     this.setState({ data: arr });
     LocalStorage.put('time', arr);
@@ -63,28 +67,19 @@ class MyTable extends React.Component {
         <TableBody>
           {rows.map((row) => {
             return (
-              <TableRow key={row.id}>
-                <TableCell component="th" scope="row">
-                  {row.day}
-                </TableCell>
-                <TableCell numeric>
-                <Button color={this.check(row.id, row.calories) ? 'secondary' : 'primary'} onClick={() => this.handleClick(row.id, row.calories)}>
-                {row.calories}
-                </Button>
-                </TableCell>
-                <TableCell numeric>
-                <Button color={this.check(row.id, row.fat) ? 'secondary' : 'primary'} onClick={() => this.handleClick(row.id, row.fat)}>
-                {row.fat}
-                </Button>
-                </TableCell>
-                <TableCell numeric><Button color={this.check(row.id, row.carbs) ? 'secondary' : 'primary'} onClick={() => this.handleClick(row.id, row.carbs)}>{row.carbs}</Button></TableCell>
-                <TableCell numeric><Button color={this.check(row.id, row.protein) ? 'secondary' : 'primary'} onClick={() => this.handleClick(row.id, row.protein)}>{row.protein}</Button></TableCell>
-                <TableCell numeric><Button color={this.check(row.id, row.kasha) ? 'secondary' : 'primary'} onClick={() => this.handleClick(row.id, row.kasha)}>{row.kasha}</Button></TableCell>
-                <TableCell numeric><Button color={this.check(row.id, row.kefir) ? 'secondary' : 'primary'} onClick={() => this.handleClick(row.id, row.kefir)}>{row.kefir}</Button></TableCell>
-                <TableCell numeric><Button color={this.check(row.id, row.ryazhanka) ? 'secondary' : 'primary'} onClick={() => this.handleClick(row.id, row.ryazhanka)}>{row.ryazhanka}</Button></TableCell>
-                <TableCell numeric><Button color={this.check(row.id, row.seledka) ? 'secondary' : 'primary'} onClick={() => this.handleClick(row.id, row.seledka)}>{row.seledka}</Button></TableCell>
-                <TableCell numeric><Button color={this.check(row.id, row.grudka) ? 'secondary' : 'primary'} onClick={() => this.handleClick(row.id, row.grudka)}>{row.grudka}</Button></TableCell>
-              </TableRow>
+                  <TableRow key={row.id}>
+                      <TableCell component="th" scope="row">
+                        {row.day}
+                    </TableCell >
+                    {row.arrayWithTime.map((item, index) => {
+                      return (
+                       <TableCell key={index} numeric>
+                         <Button color={this.check(row.id, item) ? 'secondary' : 'primary'} onClick={() => this.handleClick(row.id, item)}>
+                            {item}
+                         </Button>
+                       </TableCell>);
+                    })}
+                  </TableRow>
             );
           })}
         </TableBody>
