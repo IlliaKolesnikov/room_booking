@@ -4,10 +4,10 @@ import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
+import LocalStorage from './myLocalStorage.js';
 
 const styles = theme => ({
   root: {
@@ -21,10 +21,11 @@ const styles = theme => ({
 });
 
 let id = 0;
-function createData(name, calories, fat, carbs, protein, kasha, kefir, ryazhanka, seledka, grudka) {
+function createData(day, calories, fat, carbs, protein, kasha, kefir, ryazhanka, seledka, grudka) {
   id += 1;
-  return { id, name, calories, fat, carbs, protein, kasha, kefir, ryazhanka, seledka, grudka };
+  return { id, day, calories, fat, carbs, protein, kasha, kefir, ryazhanka, seledka, grudka };
 }
+
 const rows = [
   createData('Понедельник', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00'),
   createData('Вторник', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00'),
@@ -32,28 +33,26 @@ const rows = [
   createData('Четверг', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00'),
   createData('Пятница', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00'),
 ];
-
 class SimpleTable extends React.Component {
-  state = { data: [] }
+  state = { data: LocalStorage.get('time') || [] }
 
   handleClick = (index, value) => {
-    localStorage.clear();
     const arr = this.state.data;
-    let obj = { index: index, value: value, taken: true };
-    arr.push(JSON.stringify(obj) );
+    const obj = { index: index, value: value, taken: true };
+    arr.push(JSON.stringify(obj));
     this.setState({ data: arr });
-    localStorage.setItem('data', this.state.data);
+    LocalStorage.put('time', arr);
   };
 
   check = (index, value) => {
-    let arrayToCheck = this.state.data;
+    const arrayToCheck = this.state.data;
     let isCheck = false;
     arrayToCheck.forEach((item) => {
-      if(JSON.parse(item).index === index && JSON.parse(item).value === value)  {
-        isCheck = !isCheck
+      if (JSON.parse(item).index === index && JSON.parse(item).value === value) {
+        isCheck = !isCheck;
       }
     });
-    return isCheck
+    return isCheck;
   }
 
   render() {
@@ -66,7 +65,7 @@ class SimpleTable extends React.Component {
             return (
               <TableRow key={row.id}>
                 <TableCell component="th" scope="row">
-                  {row.name}
+                  {row.day}
                 </TableCell>
                 <TableCell numeric>
                 <Button color={this.check(row.id, row.calories) ? 'primary' : 'secondary'} onClick={() => this.handleClick(row.id, row.calories)}>
@@ -91,8 +90,8 @@ class SimpleTable extends React.Component {
         </TableBody>
       </Table>
     </Paper>
-  );
-        }
+    );
+  }
 }
 
 SimpleTable.propTypes = {
