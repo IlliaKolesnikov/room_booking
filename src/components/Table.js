@@ -21,23 +21,6 @@ const styles = theme => ({
   },
 });
 
-/*let id = 0;
-const arrayWithTime = ['10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00'];
-
-function createData(day) {
-  id += 1;
-  return { id, day, arrayWithTime };
-}
-
-
-const rows = [
-  createData('Понедельник', arrayWithTime),
-  createData('Вторник', arrayWithTime),
-  createData('Среда', arrayWithTime),
-  createData('Четверг', arrayWithTime),
-  createData('Пятница', arrayWithTime),
-];*/
-
 class MyTable extends React.Component {
   state = { data: LocalStorage.get(this.props.roomColor) || [] }
 
@@ -74,7 +57,7 @@ class MyTable extends React.Component {
                     </TableCell >
                     {row.arrayWithTime.map((item, index) => {
                       return (
-                       <TableCell key={index} numeric>
+                       <TableCell key={index} numeric >
                          <Button variant='contained' color={this.check(row.id, item) ? 'secondary' : 'primary'} onClick={() => this.handleClick(row.id, item)}>
                             {item}
                          </Button>
