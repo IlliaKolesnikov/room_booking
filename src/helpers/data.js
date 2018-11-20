@@ -8,11 +8,10 @@ function createData(day) {
 
 
 const rows = [
-  createData('Понедельник', arrayWithTime),
-  createData('Вторник', arrayWithTime),
-  createData('Среда', arrayWithTime),
-  createData('Четверг', arrayWithTime),
-  createData('Пятница', arrayWithTime),
+  createData('Green', arrayWithTime),
+  createData('Redrum', arrayWithTime),
+  createData('Blue', arrayWithTime),
+  createData('Purple', arrayWithTime),
 ];
 
 export default rows;

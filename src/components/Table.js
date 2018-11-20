@@ -26,7 +26,7 @@ class MyTable extends React.Component {
 
   handleClick = (index, value) => {
     const arr = this.state.data;
-    const obj = { index: index, value: value};
+    const obj = { index, value, date: this.props.date };
     arr.push(JSON.stringify(obj));
     this.setState({ data: arr });
     LocalStorage.put(this.props.roomColor, arr);
@@ -36,7 +36,7 @@ class MyTable extends React.Component {
     const arrayToCheck = this.state.data;
     let isCheck = false;
     arrayToCheck.forEach((item) => {
-      if (JSON.parse(item).index === index && JSON.parse(item).value === value) {
+      if (JSON.parse(item).index === index && JSON.parse(item).value === value && JSON.parse(item).date === this.props.date) {
         isCheck = !isCheck;
       }
     });
