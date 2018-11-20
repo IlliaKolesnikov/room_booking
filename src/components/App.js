@@ -32,12 +32,18 @@ class SimpleTable extends React.Component {
               <Grid item md={2}>
               Комната
               </Grid>
-              <Grid item md={10}> Июль</Grid>
+              <Grid item md={10}> Июль </Grid>
               <Grid item sm={2}>
               <Paper className={classes.root}> Green</Paper>
               </Grid>
               <Grid item sm={10}>
-                <MyTable />
+                <MyTable roomColor={'green'}/>
+              </Grid>
+              <Grid item sm={2}>
+              <Paper className={classes.root}> Red</Paper>
+              </Grid>
+              <Grid item sm={10}>
+                <MyTable roomColor={'red'}/>
               </Grid>
             </Grid>
           </CardContent>

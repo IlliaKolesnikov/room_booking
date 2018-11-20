@@ -8,6 +8,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import LocalStorage from './myLocalStorage.js';
+import rows from '../helpers/data';
 
 const styles = theme => ({
   root: {
@@ -20,7 +21,7 @@ const styles = theme => ({
   },
 });
 
-let id = 0;
+/*let id = 0;
 const arrayWithTime = ['10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00'];
 
 function createData(day) {
@@ -35,17 +36,17 @@ const rows = [
   createData('Среда', arrayWithTime),
   createData('Четверг', arrayWithTime),
   createData('Пятница', arrayWithTime),
-];
+];*/
 
 class MyTable extends React.Component {
-  state = { data: LocalStorage.get('time') || [] }
-  
+  state = { data: LocalStorage.get(this.props.roomColor) || [] }
+
   handleClick = (index, value) => {
     const arr = this.state.data;
     const obj = { index: index, value: value};
     arr.push(JSON.stringify(obj));
     this.setState({ data: arr });
-    LocalStorage.put('time', arr);
+    LocalStorage.put(this.props.roomColor, arr);
   };
 
   check = (index, value) => {
@@ -74,7 +75,7 @@ class MyTable extends React.Component {
                     {row.arrayWithTime.map((item, index) => {
                       return (
                        <TableCell key={index} numeric>
-                         <Button color={this.check(row.id, item) ? 'secondary' : 'primary'} onClick={() => this.handleClick(row.id, item)}>
+                         <Button variant='contained' color={this.check(row.id, item) ? 'secondary' : 'primary'} onClick={() => this.handleClick(row.id, item)}>
                             {item}
                          </Button>
                        </TableCell>);
