@@ -22,14 +22,23 @@ const styles = theme => ({
 });
 
 class MyTable extends React.Component {
-  state = { data: LocalStorage.get(this.props.roomColor) || [] }
+  state = { data: LocalStorage.get(this.props.booked) || [] }
 
   handleClick = (index, value) => {
     const arr = this.state.data;
     const obj = { index, value, date: this.props.date };
-    arr.push(JSON.stringify(obj));
+    const number = arr.findIndex((item) => {
+      if (JSON.parse(item).index === index && JSON.parse(item).value === value && JSON.parse(item).date === this.props.date) {
+        return item;
+      }
+    });
+    if (number !== -1) {
+      arr.splice(number, 1);
+    } else {
+      arr.push(JSON.stringify(obj));
+    }
     this.setState({ data: arr });
-    LocalStorage.put(this.props.roomColor, arr);
+    LocalStorage.put(this.props.booked, arr);
   };
 
   check = (index, value) => {
@@ -49,7 +58,7 @@ class MyTable extends React.Component {
     <Paper className={classes.root}>
       <Table className={classes.table}>
         <TableBody>
-          {rows.map((row) => {
+          {rows.map((row) => { 
             return (
                   <TableRow key={row.id}>
                       <TableCell component="th" scope="row">

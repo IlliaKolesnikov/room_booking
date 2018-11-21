@@ -32,15 +32,10 @@ class CustomCalendar extends React.Component {
   render() {
     return (
         <InfiniteCalendar
-        displayOptions={{
-          layout: 'landscape',
-        }}
-           width={'60%'}
-           height={350}
-    selected={today}
-    disabledDays={[0, 6]}
-    minDate={lastWeek}
-    onSelect={date => this.handleSelect(date)}
+          selected={today}
+          disabledDays={[0, 6]}
+          minDate={lastWeek}
+          onSelect={date => this.handleSelect(date)}
   />
     );
   }

@@ -4,43 +4,45 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
+import { withTheme, withStyles } from '@material-ui/core/styles';
 import moment from 'moment';
 import Calendar from './Calendar';
-
-
 import MyTable from './Table';
 
+const styles = theme => ({
+  root: {
+    display: 'flex',
+    justifyContent: 'space-around',
+    marginTop: 30,
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column',
+    },
+  },
+});
 
-class SimpleTable extends React.Component {
+class App extends React.Component {
   state = { selected: moment(new Date()).format('DD-MM-YYYY') }
-  handleChange = prop => event => {
-    this.setState({ [prop]: event.target.value });
-  };
 
-  handleSelectDate = date => {
-    console.log(date)
-    if (!date) this.setState({ selected: date })
-    else this.setState({ selected: date })
+  handleSelectDate = (date) => {
+    if (!date) {
+      this.setState({ selected: date });
+    } else {
+      this.setState({ selected: date });
+    }
   }
 
   render() {
+    const { classes } = this.props;
     return (
-      <Grid container justify='center'>
+      <Grid container justify='center' className={classes.root}>
       <Calendar onSelectDate={this.handleSelectDate} />
         <Card md={8}>
           <CardHeader title='Бронирование переговорных'></CardHeader>
           <CardContent>
             <Grid container>
-              <Grid item md={2}>
-              Комната
+              <Grid item xs={12}>
+                <MyTable date={this.state.selected} booked={'booked'}/>
               </Grid>
-              <Grid item md={10}> Июль </Grid>
-              <Grid item sm={2}>
-              </Grid>
-              <Grid item sm={10}>
-                <MyTable date={this.state.selected} roomColor={'green'}/>
-              </Grid>
-              
             </Grid>
           </CardContent>
         </Card >
@@ -49,8 +51,8 @@ class SimpleTable extends React.Component {
   }
 }
 
-SimpleTable.propTypes = {
+App.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default SimpleTable;
+export default withTheme()(withStyles(styles)(App));
