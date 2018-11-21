@@ -1,23 +1,51 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
+import FormLabel from '@material-ui/core/FormLabel';
 import LocalStorage from './myLocalStorage.js';
 import rows from '../helpers/data';
 
 const styles = theme => ({
   root: {
     width: '100%',
-    marginTop: theme.spacing.unit * 3,
+    marginTop: theme.spacing.unit,
     overflowX: 'auto',
+    [theme.breakpoints.down('sm')]: {
+      display: 'flex',
+      minWidth: '400',
+    },
+
   },
-  table: {
-    minWidth: 700,
+  lines: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    minWidth: 600,
+    marginBottom: 5,
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column',
+      minWidth: 80,
+    },
+  },
+  day: {
+    width: 80,
+    padding: 10,
+    [theme.breakpoints.down('sm')]: {
+      marginBottom: 15,
+    },
+  },
+  green: {
+    color: 'green',
+  },
+  red: {
+    color: 'red',
+  },
+  blue: {
+    color: 'blue',
+  },
+  purple: {
+    color: 'purple',
   },
 });
 
@@ -55,29 +83,29 @@ class MyTable extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-    <Paper className={classes.root}>
-      <Table className={classes.table}>
-        <TableBody>
-          {rows.map((row) => { 
+    <div className={classes.root}>
+          {rows.map((row) => {
             return (
-                  <TableRow key={row.id}>
-                      <TableCell component="th" scope="row">
-                        {row.day}
-                    </TableCell >
+                  <div className={classes.lines} key={row.id}>
+                      <div className={classes.day} >
+                      <FormLabel className={classes[`${row.day.toLowerCase()}`]}>{row.day}</FormLabel>
+                    </div >
+                    
+                    
                     {row.arrayWithTime.map((item, index) => {
                       return (
-                       <TableCell key={index} numeric >
+                       <div key={index} >
                          <Button variant='contained' color={this.check(row.id, item) ? 'secondary' : 'primary'} onClick={() => this.handleClick(row.id, item)}>
                             {item}
                          </Button>
-                       </TableCell>);
+                       </div>);
                     })}
-                  </TableRow>
+                    
+                   
+                  </div>
             );
           })}
-        </TableBody>
-      </Table>
-    </Paper>
+    </div>
     );
   }
 }

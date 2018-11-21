@@ -9,7 +9,7 @@ function createData(day) {
 
 const rows = [
   createData('Green', arrayWithTime),
-  createData('Redrum', arrayWithTime),
+  createData('Red', arrayWithTime),
   createData('Blue', arrayWithTime),
   createData('Purple', arrayWithTime),
 ];

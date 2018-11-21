@@ -12,11 +12,15 @@ import MyTable from './Table';
 const styles = theme => ({
   root: {
     display: 'flex',
-    justifyContent: 'space-around',
+    justifyContent: 'space-evenly',
     marginTop: 30,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       flexDirection: 'column',
     },
+  },
+  header: {
+    backgroundColor: 'rgb(68, 138, 255)',
+    color: 'white',
   },
 });
 
@@ -36,11 +40,13 @@ class App extends React.Component {
     return (
       <Grid container justify='center' className={classes.root}>
       <Calendar onSelectDate={this.handleSelectDate} />
-        <Card md={8}>
-          <CardHeader title='Бронирование переговорных'></CardHeader>
+        <Card style={{ height: '100%' }}>
+          <CardHeader className={classes.header} title='Бронирование переговорных'
+          titleTypographyProps={{ color: 'inherit' }} style={{}}
+          />
           <CardContent>
             <Grid container>
-              <Grid item xs={12}>
+              <Grid item>
                 <MyTable date={this.state.selected} booked={'booked'}/>
               </Grid>
             </Grid>

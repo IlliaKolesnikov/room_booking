@@ -31,18 +31,21 @@ class CustomCalendar extends React.Component {
 
   render() {
     return (
+      <div style={{ marginBottom: 10 }}>
         <InfiniteCalendar
-          selected={today}
-          disabledDays={[0, 6]}
-          minDate={lastWeek}
-          onSelect={date => this.handleSelect(date)}
-  />
+            height={300}
+            selected={today}
+            disabledDays={[0, 6]}
+            minDate={lastWeek}
+            onSelect={date => this.handleSelect(date)}
+            style={{ marginTop: 10 }}
+        />
+      </div>
     );
   }
 }
 
 CustomCalendar.propTypes = {
-  dates: PropTypes.array.isRequired,
   onSelectDate: PropTypes.func.isRequired,
 };
 
