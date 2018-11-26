@@ -8,7 +8,7 @@ tr {
 }
 
 .calendar-container {
-    border: 2px solid skyblue;
+    width: 100%;
 }
 
 .calendar {
@@ -45,8 +45,6 @@ tr {
 
 .day {
     cursor: pointer;
-    width: 24px;
-    height: 24px;
     line-height: 24px;
 }
 
@@ -60,10 +58,8 @@ tr {
 }
 .selected-day {
     background-color:yellow;
-    width: 28px;
-    height: 28px;
+    border-radius: 10px;
     line-height: 28px;
-    border-radius: 2%;
     color: black;
 }
 

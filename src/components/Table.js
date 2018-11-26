@@ -1,13 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import FormLabel from '@material-ui/core/FormLabel';
-import LocalStorage from './myLocalStorage.js';
-import rows from '../helpers/data';
-import Calendar from './Calendar';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { withStyles } from '@material-ui/core/styles'
+import Button from '@material-ui/core/Button'
+import FormLabel from '@material-ui/core/FormLabel'
+import LocalStorage from './myLocalStorage.js'
+import rows from '../helpers/data'
 
-const colors = ['green', 'red', 'blue', 'purple'];
+const colors = ['green', 'red', 'blue', 'purple']
 const styles = theme => ({
   root: {
     width: '100%',
@@ -48,69 +47,71 @@ const styles = theme => ({
   purple: {
     color: 'purple',
   },
-});
+})
 
 class MyTable extends React.Component {
   state = { data: LocalStorage.get(this.props.booked) || [] }
 
   handleClick = (index, value) => {
-    const arr = this.state.data;
-    const obj = { index, value, date: this.props.date };
+    const arr = this.state.data
+    const obj = { index, value, date: this.props.date }
     const number = arr.findIndex((item) => {
       if (JSON.parse(item).index === index && JSON.parse(item).value === value && JSON.parse(item).date === this.props.date) {
-        return item;
+        return item
       }
-    });
+    })
     if (number !== -1) {
-      arr.splice(number, 1);
+      arr.splice(number, 1)
     } else {
-      arr.push(JSON.stringify(obj));
+      arr.push(JSON.stringify(obj))
     }
-    this.setState({ data: arr });
-    LocalStorage.put(this.props.booked, arr);
-  };
+    this.setState({ data: arr })
+    LocalStorage.put(this.props.booked, arr)
+  }
 
   check = (index, value) => {
-    const arrayToCheck = this.state.data;
-    let isCheck = false;
+    const arrayToCheck = this.state.data
+    let isCheck = false
     arrayToCheck.forEach((item) => {
       if (JSON.parse(item).index === index && JSON.parse(item).value === value && JSON.parse(item).date === this.props.date) {
-        isCheck = !isCheck;
+        isCheck = !isCheck
       }
-    });
-    return isCheck;
+    })
+    return isCheck
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes } = this.props
+    console.log(this.props.date)
     return (
-    <div className={classes.root}>
-          {rows.map((row, index) => {
-            return (
-                  <div className={classes.lines} key={row.id}>
-                      <div className={classes.day} >
-                      <FormLabel className={classes[`${row.day.toLowerCase()}`]}>{row.day}</FormLabel>
-                    </div >
-                    {row.arrayWithTime.map((item, index) => {
-                      return (
-                       <div key={index} >
-                         <Button variant='contained' color={this.check(row.id, item) ? 'secondary' : 'primary'} onClick={() => this.handleClick(row.id, item)}>
-                            {item}
-                         </Button>
-                       </div>);
-                    })}
-                    
-                   
-                  </div>
-            );
-          })}
-    </div>
-    );
+      <div className={classes.root}>
+        {rows.map((row, index) => {
+          return (
+            <div className={classes.lines} key={row.id}>
+              <div className={classes.day}>
+                <FormLabel className={classes[`${row.day.toLowerCase()}`]}>{row.day}</FormLabel>
+              </div>
+              {row.arrayWithTime.map((item, index) => {
+                return (
+                  <div key={index}>
+                    <Button variant='contained' color={this.check(row.id, item) ? 'secondary' : 'primary'}
+                            onClick={() => this.handleClick(row.id, item)}>
+                      {item}
+                    </Button>
+                  </div>)
+              })}
+
+
+            </div>
+          )
+        })}
+      </div>
+    )
   }
 }
 
 MyTable.propTypes = {
   classes: PropTypes.object.isRequired,
-};
+}
 
-export default withStyles(styles)(MyTable);
+export default withStyles(styles)(MyTable)
