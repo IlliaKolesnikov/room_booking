@@ -7,6 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import { withTheme, withStyles } from '@material-ui/core/styles';
 import moment from 'moment';
 import Calendar from './MyCalendar/MyCalendar';
+import Header from './Header'
 import MyTable from './Table';
 
 const styles = theme => ({
@@ -38,6 +39,8 @@ class App extends React.Component {
   render() {
     const { classes } = this.props;
     return (
+      <div>
+        <Header />
       <Grid container justify='center' className={classes.root}>
         <Card style={{ height: '100%' }}>
           <CardHeader className={classes.header} title='Бронирование переговорных'
@@ -53,6 +56,7 @@ class App extends React.Component {
           </CardContent>
         </Card >
       </Grid>
+      </div>
     );
   }
 }
