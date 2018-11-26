@@ -44,14 +44,13 @@ tr {
 }
 
 .day {
-    cursor: pointer;
+    width: 20%;
+    cursor: pointer;+
     line-height: 24px;
 }
 
 .current-day {
     background-color: #4285f4;
-    width: 28px;
-    height: 28px;
     line-height: 28px;
     border-radius: 2%;
     color: white;
@@ -81,11 +80,6 @@ tr {
     right:3px;
 }
 
-.prev {
-}
-
-.next {
-}
 
 .editor-year {
     max-width: 3.6em;

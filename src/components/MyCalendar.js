@@ -217,7 +217,6 @@ export default class Calendar extends React.Component {
 
   render() {
     const { weekNumber, left } = this.state
-    const end = 'end'
     // Map the weekdays i.e Sun, Mon, Tue etc as <td>
     const weekdays = this.weekdaysShort.map((day) => {
       return (
@@ -238,8 +237,8 @@ export default class Calendar extends React.Component {
       const className = (d === this.currentDay() ? 'day current-day' : 'day')
       const selectedClass = (d === this.state.selectedDay ? ' selected-day ' : '')
       daysInMonth.push(
-        <td key={d} className={className + selectedClass}>
-          <span onClick={(e) => {this.onDayClick(e, d)}}>{d}</span>
+        <td key={d} onClick={(e) => {this.onDayClick(e, d)}} className={className + selectedClass}>
+          <span>{d}</span>
         </td>
       )
     }
@@ -283,22 +282,22 @@ export default class Calendar extends React.Component {
           <table className="calendar">
             <thead>
             <tr className="calendar-header">
-              <td colSpan="5">
+              <td colSpan={4}>
                 <this.MonthNav />
                 {' '}
                 <this.YearNav />
               </td>
-              <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+              <td style={{display: 'flex', justifyContent: 'flex-end', position: 'relative'}}>
                 <ChevronLeft
                   onClick={(e) => { this.prevWeek() }}
                 />
                 <ChevronRight
                   onClick={(e) => { this.nextWeek() }}
                 />
-              </div>
+              </td>
             </tr>
             </thead>
-            <tbody>
+            <tbody style={{margin: 'auto'}}>
             <tr>
               {weekdays}
             </tr>

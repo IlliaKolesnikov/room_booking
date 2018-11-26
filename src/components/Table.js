@@ -82,10 +82,9 @@ class MyTable extends React.Component {
 
   render() {
     const { classes } = this.props
-    console.log(this.props.date)
     return (
       <div className={classes.root}>
-        {rows.map((row, index) => {
+        {rows.map((row) => {
           return (
             <div className={classes.lines} key={row.id}>
               <div className={classes.day}>

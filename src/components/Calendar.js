@@ -4,7 +4,6 @@ import 'react-infinite-calendar/styles.css'
 import moment from 'moment'
 import MyCalendar from './MyCalendar'
 
-const today = new Date()
 
 class CustomCalendar extends React.Component {
   state = {
