@@ -3,10 +3,10 @@ import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import FormLabel from '@material-ui/core/FormLabel'
-import LocalStorage from './myLocalStorage.js'
+import LocalStorage from '../helpers/myLocalStorage'
 import rows from '../helpers/data'
 
-const colors = ['green', 'red', 'blue', 'purple']
+//const colors = ['green', 'red', 'blue', 'purple']
 const styles = theme => ({
   root: {
     width: '100%',
@@ -56,14 +56,14 @@ class MyTable extends React.Component {
     const arr = this.state.data
     const obj = { index, value, date: this.props.date }
     const number = arr.findIndex((item) => {
-      if (JSON.parse(item).index === index && JSON.parse(item).value === value && JSON.parse(item).date === this.props.date) {
+      if (item.index === index && item.value === value && item.date === this.props.date) {
         return item
       }
     })
     if (number !== -1) {
       arr.splice(number, 1)
     } else {
-      arr.push(JSON.stringify(obj))
+      arr.push(obj)
     }
     this.setState({ data: arr })
     LocalStorage.put(this.props.booked, arr)
@@ -73,7 +73,7 @@ class MyTable extends React.Component {
     const arrayToCheck = this.state.data
     let isCheck = false
     arrayToCheck.forEach((item) => {
-      if (JSON.parse(item).index === index && JSON.parse(item).value === value && JSON.parse(item).date === this.props.date) {
+      if (item.index === index && item.value === value && item.date === this.props.date) {
         isCheck = !isCheck
       }
     })
@@ -93,14 +93,12 @@ class MyTable extends React.Component {
               {row.arrayWithTime.map((item, index) => {
                 return (
                   <div key={index}>
-                    <Button variant='contained' color={this.check(row.id, item) ? 'secondary' : 'primary'}
+                   <Button variant='contained' color={this.check(row.id, item) ? 'secondary' : 'primary'}
                             onClick={() => this.handleClick(row.id, item)}>
                       {item}
                     </Button>
                   </div>)
               })}
-
-
             </div>
           )
         })}

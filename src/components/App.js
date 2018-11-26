@@ -6,7 +6,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import { withTheme, withStyles } from '@material-ui/core/styles';
 import moment from 'moment';
-import Calendar from './Calendar';
+import Calendar from './MyCalendar/MyCalendar';
 import MyTable from './Table';
 
 const styles = theme => ({

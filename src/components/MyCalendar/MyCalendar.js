@@ -2,6 +2,7 @@ import React from 'react'
 import moment from 'moment'
 import { ChevronLeft, ChevronRight } from '@material-ui/icons'
 import './calendar.css'
+import PropTypes from 'prop-types'
 
 function addWeekdays() {
   const date = moment.weekdaysShort()
@@ -10,7 +11,7 @@ function addWeekdays() {
   return date
 }
 
-export default class Calendar extends React.Component {
+class Calendar extends React.Component {
   state = {
     dateContext: moment(),
     today: moment(),
@@ -59,7 +60,7 @@ export default class Calendar extends React.Component {
 
   firstDayOfMonth = () => {
     let dateContext = this.state.dateContext
-    let firstDay = moment(dateContext).startOf('month').format('d') // Day of week 0...1..5...6
+    let firstDay = moment(dateContext).startOf('month').format('d')
     return firstDay
   }
 
@@ -120,9 +121,9 @@ export default class Calendar extends React.Component {
     let popup = props.data.map((data) => {
       return (
         <div key={data}>
-          <a href="#" onClick={(e) => {this.onSelectChange(e, data)}}>
+          <span onClick={(e) => {this.onSelectChange(e, data)}}>
             {data}
-          </a>
+          </span>
         </div>
       )
     })
@@ -203,12 +204,8 @@ export default class Calendar extends React.Component {
   onDayClick = (e, day) => {
     let dateContext = Object.assign({}, this.state.dateContext)
     dateContext=moment(dateContext).set("date",day);
-    console.log(moment(dateContext).format('DD-MM-YYYY'))
-    //moment(day.format('DD-MM-YYYY'))
     this.setState({
       selectedDay: day
-    }, () => {
-      console.log('SELECTED DAY: ', this.state.selectedDay)
     })
     this.props.onSelectDate(dateContext.format('DD-MM-YYYY'));
 
@@ -276,7 +273,6 @@ export default class Calendar extends React.Component {
     })
 
     if (trElems[weekNumber] !== undefined) {
-      console.log(this.state.dateContext.format('DD-MM-YYYY'))
       return (
         <div className="calendar-container" style={this.style}>
           <table className="calendar">
@@ -311,7 +307,13 @@ export default class Calendar extends React.Component {
 
       )
     } else {
-      return <div>End</div>
+      return <div>Error</div>
     }
   }
 }
+
+Calendar.propTypes = {
+  onSelectDate: PropTypes.func.isRequired,
+}
+
+export default Calendar
