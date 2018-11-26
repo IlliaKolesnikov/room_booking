@@ -1,14 +1,11 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-//import InfiniteCalendar from 'react-infinite-calendar';
-import Calendar from 'react-calendar'
 import 'react-infinite-calendar/styles.css';
 import moment from 'moment';
-import MyCalendar from './MyCalendar'
+import MyCalendar from './MyCalendar';
 
 const today = new Date();
-const lastWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
 
 class CustomCalendar extends React.Component {
   state = {
@@ -34,8 +31,6 @@ class CustomCalendar extends React.Component {
   render() {
     return (
       <div style={{ marginBottom: 10 }}>
-        {/*<Calendar
-        /> */}
         <MyCalendar />
       </div>
     );

@@ -17,7 +17,8 @@ export default class Calendar extends React.Component {
       showMonthPopup: false,
       showYearPopup: false,
       selectedDay: null,
-      weekNumber: 1,
+      weekNumber: null,
+      left: false,
     }
 
     constructor(props) {
@@ -25,6 +26,13 @@ export default class Calendar extends React.Component {
       this.width = props.width || '250px';
       this.style = props.style || {};
       this.style.width = this.width; // add this
+    }
+
+    componentDidMount() {
+      this.setState({ 
+        weekNumber: this.state.dateContext.format('W') / 12 + 1,
+        selectedDay: this.state.dateContext.format('D'),
+      });
     }
 
 
@@ -41,12 +49,12 @@ export default class Calendar extends React.Component {
     }
 
     daysInMonth = () => {
-      console.log(this.state.dateContext.daysInMonth())
+     // console.log(this.state.dateContext.daysInMonth())
       return this.state.dateContext.daysInMonth();
     }
 
     currentDate = () => {
-      console.log('currentDate: ', this.state.dateContext.get('date'));
+      //console.log('currentDate: ', this.state.dateContext.get('date'));
       return this.state.dateContext.get('date');
     }
 
@@ -91,19 +99,21 @@ export default class Calendar extends React.Component {
       if (this.state.weekNumber === 5) {
         this.nextMonth();
         this.setState({ weekNumber: 1 });
-      } else {
+      }
+      else {
         this.setState({ weekNumber: this.state.weekNumber + 1 });
       }
+      this.setState({ left: false })
     }
 
     prevWeek = (trEl) => {
-        console.log(trEl[this.state.weekNumber])
       if (this.state.weekNumber === 1) {
         this.prevMonth();
         this.setState({ weekNumber: 5 })
       } else {
         this.setState({ weekNumber: this.state.weekNumber - 1 });
       }
+      this.setState({ left: true })
     }
 
     onSelectChange = (e, data) => {
@@ -207,7 +217,7 @@ export default class Calendar extends React.Component {
     }
 
     render() {
-      const { weekNumber } = this.state;
+      const { weekNumber, left } = this.state;
       const end = 'end';
       // Map the weekdays i.e Sun, Mon, Tue etc as <td>
       const weekdays = this.weekdaysShort.map((day) => {
@@ -224,8 +234,6 @@ export default class Calendar extends React.Component {
         );
       }
 
-      console.log("blanks: ", blanks);
-
       let daysInMonth = [];
       for (let d = 1; d <= this.daysInMonth(); d++) {
         const className = (d === this.currentDay() ? "day current-day": "day");
@@ -237,9 +245,6 @@ export default class Calendar extends React.Component {
         );
       }
 
-
-    console.log('days: ', daysInMonth);
-        
 
       const totalSlots = [...blanks, ...daysInMonth];
       let rows = [];
@@ -259,17 +264,13 @@ export default class Calendar extends React.Component {
           rows.push(insertRow);
         }
       });
-      let mas = []
-      let trElems = rows.map((d, i) => {
-        mas = []
+      if (blanks.length === 6) {
+        rows.splice(1, 1);
+      }
+      const trElems = rows.map((d, i) => {
         d.splice(0, 1);
         d.splice(5, 1);
-        d.map((item, index) => {
-          if (item.key % 80 === 0) {
-            mas.push(item.key)
-          }
-        });
-        console.log(mas);
+
 
         return (
                 <tr key={i * 100}>
@@ -278,9 +279,8 @@ export default class Calendar extends React.Component {
         );
       });
 
-      //console.log(trElems[weekNumber]);
       if (trElems[weekNumber] !== undefined) {
-        console.log(weekNumber)
+        console.log(this.state)
         return (
             <div className="calendar-container" style={this.style}>
                 <table className="calendar">
@@ -295,7 +295,7 @@ export default class Calendar extends React.Component {
                                 <ChevronLeft
                                     onClick={(e) => { this.prevWeek(trElems); }}
                                 />
-                                <ChevronRight className="prev fa fa-fw fa-chevron-right"
+                                <ChevronRight
                                     onClick={(e) => { this.nextWeek(); }}
                                 />
                                 
@@ -307,7 +307,9 @@ export default class Calendar extends React.Component {
                         <tr>
                             {weekdays}
                         </tr>
-                        {(trElems[weekNumber].key !== 0 && mas.length !== 5) ? trElems[weekNumber] : end }
+                        {(trElems[weekNumber].key !== 0 && trElems[weekNumber].props.children.length !== 0)  ?
+                         trElems[weekNumber]                         :
+                         (left ? this.prevWeek() : this.nextWeek()) }
                     </tbody>
                 </table>
 

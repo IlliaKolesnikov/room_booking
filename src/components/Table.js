@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import FormLabel from '@material-ui/core/FormLabel';
 import LocalStorage from './myLocalStorage.js';
 import rows from '../helpers/data';
+import Calendar from './Calendar';
 
+const colors = ['green', 'red', 'blue', 'purple'];
 const styles = theme => ({
   root: {
     width: '100%',
@@ -84,14 +85,12 @@ class MyTable extends React.Component {
     const { classes } = this.props;
     return (
     <div className={classes.root}>
-          {rows.map((row) => {
+          {rows.map((row, index) => {
             return (
                   <div className={classes.lines} key={row.id}>
                       <div className={classes.day} >
                       <FormLabel className={classes[`${row.day.toLowerCase()}`]}>{row.day}</FormLabel>
                     </div >
-                    
-                    
                     {row.arrayWithTime.map((item, index) => {
                       return (
                        <div key={index} >

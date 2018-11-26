@@ -39,7 +39,6 @@ class App extends React.Component {
     const { classes } = this.props;
     return (
       <Grid container justify='center' className={classes.root}>
-      <Calendar onSelectDate={this.handleSelectDate} />
         <Card style={{ height: '100%' }}>
           <CardHeader className={classes.header} title='Бронирование переговорных'
           titleTypographyProps={{ color: 'inherit' }} style={{}}
@@ -47,6 +46,7 @@ class App extends React.Component {
           <CardContent>
             <Grid container>
               <Grid item>
+                <Calendar onSelectDate={this.handleSelectDate} />
                 <MyTable date={this.state.selected} booked={'booked'}/>
               </Grid>
             </Grid>
