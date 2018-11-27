@@ -1,9 +1,9 @@
 let id = 0;
 const arrayWithTime = ['10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00'];
 
-function createData(day) {
+function createData(roomColor) {
   id += 1;
-  return { id, day, arrayWithTime };
+  return { id, roomColor, arrayWithTime };
 }
 
 

@@ -1,10 +1,10 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
-import Button from '@material-ui/core/Button'
-import FormLabel from '@material-ui/core/FormLabel'
-import LocalStorage from '../helpers/myLocalStorage'
-import rows from '../helpers/data'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import FormLabel from '@material-ui/core/FormLabel';
+import LocalStorage from '../helpers/myLocalStorage';
+import rows from '../helpers/data';
 
 //const colors = ['green', 'red', 'blue', 'purple']
 const styles = theme => ({
@@ -53,42 +53,42 @@ class MyTable extends React.Component {
   state = { data: LocalStorage.get(this.props.booked) || [] }
 
   handleClick = (index, value) => {
-    const arr = this.state.data
+    const arr = this.state.data;
     const obj = { index, value, date: this.props.date }
     const number = arr.findIndex((item) => {
       if (item.index === index && item.value === value && item.date === this.props.date) {
-        return item
+        return item;
       }
-    })
+    });
     if (number !== -1) {
-      arr.splice(number, 1)
+      arr.splice(number, 1);
     } else {
       arr.push(obj)
     }
     this.setState({ data: arr })
-    LocalStorage.put(this.props.booked, arr)
+    LocalStorage.put(this.props.booked, arr);
   }
 
   check = (index, value) => {
-    const arrayToCheck = this.state.data
-    let isCheck = false
+    const arrayToCheck = this.state.data;
+    let isCheck = false;
     arrayToCheck.forEach((item) => {
       if (item.index === index && item.value === value && item.date === this.props.date) {
-        isCheck = !isCheck
+        isCheck = !isCheck;
       }
-    })
-    return isCheck
+    });
+    return isCheck;
   }
 
   render() {
-    const { classes } = this.props
+    const { classes } = this.props;
     return (
       <div className={classes.root}>
         {rows.map((row) => {
           return (
             <div className={classes.lines} key={row.id}>
               <div className={classes.day}>
-                <FormLabel className={classes[`${row.day.toLowerCase()}`]}>{row.day}</FormLabel>
+                <FormLabel className={classes[`${row.roomColor.toLowerCase()}`]}>{row.roomColor}</FormLabel>
               </div>
               {row.arrayWithTime.map((item, index) => {
                 return (
@@ -97,13 +97,13 @@ class MyTable extends React.Component {
                             onClick={() => this.handleClick(row.id, item)}>
                       {item}
                     </Button>
-                  </div>)
+                  </div>);
               })}
             </div>
-          )
+          );
         })}
       </div>
-    )
+    );
   }
 }
 

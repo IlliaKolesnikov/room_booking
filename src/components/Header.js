@@ -1,20 +1,17 @@
-import React from 'react'
-import { object, string } from 'prop-types'
-import classNames from 'classnames'
+import React from 'react';
+import classNames from 'classnames';
 import FormLabel from '@material-ui/core/FormLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
-import Grid from "@material-ui/core/Grid";
+import Grid from '@material-ui/core/Grid';
 import Grow from '@material-ui/core/Grow';
 import Paper from '@material-ui/core/Paper';
-import Popper from '@material-ui/core/Popper'
+import Popper from '@material-ui/core/Popper';
 import MenuList from '@material-ui/core/MenuList';
+import { Link } from 'react-router-dom';
+import { Toolbar, Typography, withStyles } from '@material-ui/core';
 // @material-ui/icons
-import Person from "@material-ui/icons/Person";
-import AccountCircle from "@material-ui/icons/AccountCircle";
-import { Link } from 'react-router-dom'
-import { Toolbar, Typography, withStyles } from '@material-ui/core'
-//import connector from './connector'
+import AccountCircle from '@material-ui/icons/AccountCircle';
 
 const styles = theme => ({
   root: {
@@ -33,7 +30,7 @@ const styles = theme => ({
       textAlign: 'left',
     },
   },
-})
+});
 
 class Header extends React.Component {
   state = {
@@ -50,7 +47,6 @@ class Header extends React.Component {
     }
 
     this.setState({ open: false });
-    this.props.signOut()
   };
 
   render() {
@@ -65,7 +61,7 @@ class Header extends React.Component {
               <Grid item>
                 <FormLabel> {localStorage.mail} </FormLabel>
               </Grid>
-              <Grid item> {//выпадающий Sign Out на кнопку
+              <Grid item> {
               }
                 <IconButton
                   buttonRef={node => {
@@ -86,7 +82,7 @@ class Header extends React.Component {
                     >
                       <Paper>
                         <MenuList>
-                          <MenuItem onClick={this.handleClose}>Sign In</MenuItem>
+                          <MenuItem onClick={this.handleClose}><Link to='/signin' > Sign in </Link> </MenuItem>
                         </MenuList>
                       </Paper>
                     </Grow>
@@ -99,13 +95,9 @@ class Header extends React.Component {
 
         </Toolbar>
       </div>
-    </header>)
+    </header>);
   }
 }
 
-Header.propTypes = {
-  classes: object.isRequired,
-  color: string.isRequired,
-}
 
-export default withStyles(styles)(Header)
+export default withStyles(styles)(Header);
