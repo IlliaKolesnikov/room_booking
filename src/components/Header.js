@@ -82,7 +82,8 @@ class Header extends React.Component {
                     >
                       <Paper>
                         <MenuList>
-                          <MenuItem onClick={this.handleClose}><Link to='/signin' > Sign in </Link> </MenuItem>
+                          <MenuItem onClick={this.handleClose}> <Link to='/signin'> Sign in </Link> </MenuItem>
+                          <MenuItem onClick={this.handleClose}> <Link to='/signup'> Sign up </Link> </MenuItem>
                         </MenuList>
                       </Paper>
                     </Grow>
