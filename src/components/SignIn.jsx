@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import withStyles from '@material-ui/core/styles/withStyles';
-import { signIn, signUp } from '../redux/actions/sign';
+import { signIn } from '../redux/actions/sign';
 
 const styles = {
   root: {
@@ -32,6 +32,9 @@ const styles = {
     marginBottom: '3px',
     textDecoration: 'none',
   },
+  marginLeft: {
+    marginLeft: 20
+  }
 
 };
 
@@ -83,9 +86,9 @@ class SignIn extends Component {
 
                 </Grid>
               </CardContent>
-                <Button color="primary" variant='contained' onClick={() => this.props.signIn(this.state.mail, this.state.password, history)}>
+                <Button color="primary" className={classes.marginLeft} variant='contained' onClick={() => this.props.signIn(this.state.mail, this.state.password, history)}>
                   Sign in</Button>
-                <div><Link to={'/signup'}>First time user? Sign up</Link></div>
+                <div  className={classes.marginLeft}><Link to={'/signup'}>First time user? Sign up</Link></div>
 
             </Card>
           </Grid>

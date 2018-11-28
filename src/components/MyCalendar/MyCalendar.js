@@ -203,11 +203,11 @@ class Calendar extends React.Component {
 
   onDayClick = (e, day) => {
     let dateContext = Object.assign({}, this.state.dateContext)
-    dateContext=moment(dateContext).set("date",day);
+    dateContext = moment(dateContext).set('date', day)
     this.setState({
       selectedDay: day
     })
-    this.props.onSelectDate(dateContext.format('DD-MM-YYYY'));
+    this.props.onSelectDate(dateContext.format('DD-MM-YYYY'))
 
     this.props.onDayClick && this.props.onDayClick(e, day)
   }
@@ -283,7 +283,7 @@ class Calendar extends React.Component {
                 {' '}
                 <this.YearNav />
               </td>
-              <td style={{display: 'flex', justifyContent: 'flex-end', position: 'relative'}}>
+              <td style={{ display: 'flex', justifyContent: 'flex-end', position: 'relative' }}>
                 <ChevronLeft
                   onClick={(e) => { this.prevWeek() }}
                 />
@@ -293,8 +293,8 @@ class Calendar extends React.Component {
               </td>
             </tr>
             </thead>
-            <tbody style={{margin: 'auto'}}>
-            <tr>
+            <tbody style={{ margin: 'auto' }}>
+            <tr style={{fontSize: '1rem'}}>
               {weekdays}
             </tr>
             {(trElems[weekNumber].key !== 0 && trElems[weekNumber].props.children.length !== 0) ?

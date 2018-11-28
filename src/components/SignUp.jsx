@@ -32,6 +32,9 @@ const styles = {
     marginBottom: '3px',
     textDecoration: 'none',
   },
+  marginLeft: {
+    marginLeft: 20
+  }
 
 }
 
@@ -110,9 +113,10 @@ class SignUp extends Component {
                   </Grid>
 
                 </Grid>
+
               </CardContent>
-              <Button color="primary" variant="contained" onClick={this.onRepeatCheck}>Sign up</Button>
-              <div><Link to={'/signin'}> Already have an account? Sign in</Link></div>
+              <Button className={classes.marginLeft} color="primary" variant="contained" onClick={this.onRepeatCheck}>Sign up</Button>
+              <div className={classes.marginLeft}><Link to={'/signin'}> Already have an account? Sign in</Link></div>
 
             </Card>
           </Grid>

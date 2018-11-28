@@ -25,7 +25,7 @@ const styles = theme => ({
 });
 
 class Booking extends React.Component {
-  state = { selected: moment(new Date()).format('DD-MM-YYYY') }
+  state = { selected: moment(new Date()).format('DD-MM-YYYY')}
 
   handleSelectDate = (date) => {
     if (!date) {

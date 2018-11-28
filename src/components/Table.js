@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 import FormLabel from '@material-ui/core/FormLabel';
 import LocalStorage from '../helpers/myLocalStorage';
 import rows from '../helpers/data';
+import Snackbar from './Snackbar/Snackbar'
 
 //const colors = ['green', 'red', 'blue', 'purple']
 const styles = theme => ({
@@ -50,11 +51,11 @@ const styles = theme => ({
 })
 
 class MyTable extends React.Component {
-  state = { data: LocalStorage.get(this.props.booked) || [] }
+  state = { data: LocalStorage.get(this.props.booked) || [], message: '' }
 
   handleClick = (index, value) => {
     const arr = this.state.data;
-    if (localStorage.user != '')  {
+    if (localStorage.user !== '')  {
     const obj = { index, value, date: this.props.date, user: localStorage.user }
     const number = arr.findIndex((item) => {
       if (item.index === index && item.value === value && item.date === this.props.date) {
@@ -64,6 +65,9 @@ class MyTable extends React.Component {
     if (number !== -1) {
       if (arr[number].user === localStorage.user) {
         arr.splice(number, 1);
+      }
+      else{
+        this.setState({message: "The room is booked by another user."})
       }
     } else {
       arr.push(obj);
@@ -86,6 +90,10 @@ class MyTable extends React.Component {
     return isCheck;
   }
 
+  closeSnackbar = () =>{
+    this.setState({message: ''})
+  }
+
   render() {
     const { classes } = this.props;
     return (
@@ -93,6 +101,10 @@ class MyTable extends React.Component {
         {rows.map((row) => {
           return (
             <div className={classes.lines} key={row.id}>
+              { this.state.message !== '' ? <Snackbar
+                variant="error"
+                message={this.state.message}
+                onClose={this.closeSnackbar} /> : null }
               <div className={classes.day}>
                 <FormLabel className={classes[`${row.roomColor.toLowerCase()}`]}>{row.roomColor}</FormLabel>
               </div>
