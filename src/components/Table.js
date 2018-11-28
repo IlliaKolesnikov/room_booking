@@ -54,26 +54,32 @@ class MyTable extends React.Component {
 
   handleClick = (index, value) => {
     const arr = this.state.data;
-    const obj = { index, value, date: this.props.date }
+    if (localStorage.user != '')  {
+    const obj = { index, value, date: this.props.date, user: localStorage.user }
     const number = arr.findIndex((item) => {
       if (item.index === index && item.value === value && item.date === this.props.date) {
         return item;
       }
     });
     if (number !== -1) {
-      arr.splice(number, 1);
+      if (arr[number].user === localStorage.user) {
+        arr.splice(number, 1);
+      }
     } else {
-      arr.push(obj)
+      arr.push(obj);
     }
-    this.setState({ data: arr })
+    this.setState({ data: arr });
     LocalStorage.put(this.props.booked, arr);
+   } else {
+      console.log("User is not defined")
+    }
   }
 
   check = (index, value) => {
     const arrayToCheck = this.state.data;
     let isCheck = false;
     arrayToCheck.forEach((item) => {
-      if (item.index === index && item.value === value && item.date === this.props.date) {
+      if (item.index === index && item.value === value && item.date === this.props.date ) {
         isCheck = !isCheck;
       }
     });
@@ -94,7 +100,7 @@ class MyTable extends React.Component {
                 return (
                   <div key={index}>
                    <Button variant='contained' color={this.check(row.id, item) ? 'secondary' : 'primary'}
-                            onClick={() => this.handleClick(row.id, item)}>
+                            onClick={localStorage.user ? () => this.handleClick(row.id, item) : null}>
                       {item}
                     </Button>
                   </div>);
@@ -109,6 +115,6 @@ class MyTable extends React.Component {
 
 MyTable.propTypes = {
   classes: PropTypes.object.isRequired,
-}
+};
 
-export default withStyles(styles)(MyTable)
+export default withStyles(styles)(MyTable);

@@ -1,14 +1,14 @@
 const initialState = {
   error: null,
-  mail: null,
+  isAuth: false,
 };
 
 function sign(state = initialState, action) {
   switch (action.type) {
     case 'AUTH_SUCCESS':
-      return { ...state, mail: action.payload };
+      return { ...state, isAuth: true };
     case 'LOG_OUT':
-      return { ...state, mail: null, error: null };
+      return { ...state, isAuth: false, error: null };
     case 'ERROR_FOUND':
       return { ...state, error: action.payload };
     case 'MESSAGE_CLOSED':

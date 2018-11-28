@@ -54,7 +54,7 @@ class SignIn extends Component {
     return (
       <div>
         <Grid container justify='center' className={classes.root}>
-          <Grid item xs={12} sm={12} md={8}>
+          <Grid item xs={12} sm={12} md={4}>
             <Card>
               <CardHeader title="Sign into Booking App"
                           subheader="Please enter your email and password"
@@ -105,7 +105,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     signIn: (userName, userPassword, history) => dispatch(signIn(userName, userPassword, history)),
-    signUp: (userName, userPassword) => dispatch(signUp(userName, userPassword)),
   };
 }
 

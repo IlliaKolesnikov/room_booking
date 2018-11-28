@@ -1,17 +1,19 @@
-import React from 'react';
-import classNames from 'classnames';
-import FormLabel from '@material-ui/core/FormLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import IconButton from '@material-ui/core/IconButton';
-import Grid from '@material-ui/core/Grid';
-import Grow from '@material-ui/core/Grow';
-import Paper from '@material-ui/core/Paper';
-import Popper from '@material-ui/core/Popper';
-import MenuList from '@material-ui/core/MenuList';
-import { Link } from 'react-router-dom';
-import { Toolbar, Typography, withStyles } from '@material-ui/core';
+import React from 'react'
+import classNames from 'classnames'
+import { connect } from 'react-redux'
+import FormLabel from '@material-ui/core/FormLabel'
+import MenuItem from '@material-ui/core/MenuItem'
+import IconButton from '@material-ui/core/IconButton'
+import Grid from '@material-ui/core/Grid'
+import Grow from '@material-ui/core/Grow'
+import Paper from '@material-ui/core/Paper'
+import Popper from '@material-ui/core/Popper'
+import MenuList from '@material-ui/core/MenuList'
+import { Link } from 'react-router-dom'
+import { Toolbar, Typography, withStyles } from '@material-ui/core'
 // @material-ui/icons
-import AccountCircle from '@material-ui/icons/AccountCircle';
+import AccountCircle from '@material-ui/icons/AccountCircle'
+import { signOut } from '../redux/actions/sign'
 
 const styles = theme => ({
   root: {
@@ -30,24 +32,24 @@ const styles = theme => ({
       textAlign: 'left',
     },
   },
-});
+})
 
 class Header extends React.Component {
   state = {
     open: false,
-  };
+  }
 
   handleToggle = () => {
-    this.setState(state => ({ open: !state.open }));
-  };
+    this.setState(state => ({ open: !state.open }))
+  }
 
-  handleClose = event => {
-    if (this.anchorEl.contains(event.target)) {
-      return;
-    }
-
-    this.setState({ open: false });
-  };
+  signOutHandler = () => {
+    this.setState({ open: false })
+    this.props.signOut()
+  }
+  handleClose = () => {
+    this.setState({ open: false })
+  }
 
   render() {
     const { classes, color } = this.props
@@ -65,7 +67,7 @@ class Header extends React.Component {
               }
                 <IconButton
                   buttonRef={node => {
-                    this.anchorEl = node;
+                    this.anchorEl = node
                   }}
                   aria-owns={open ? 'menu-list-grow' : undefined}
                   aria-haspopup="true"
@@ -82,8 +84,12 @@ class Header extends React.Component {
                     >
                       <Paper>
                         <MenuList>
-                          <MenuItem onClick={this.handleClose}> <Link to='/signin'> Sign in </Link> </MenuItem>
-                          <MenuItem onClick={this.handleClose}> <Link to='/signup'> Sign up </Link> </MenuItem>
+                          {localStorage.user ?
+                            <div><MenuItem onClick={this.signOutHandler}> Sign out </MenuItem></div> :
+                            <div><MenuItem onClick={this.handleClose}> <Link to="/signin"> Sign in </Link> </MenuItem>
+                              <MenuItem onClick={this.handleClose}> < Link to="/signup"> Sign up </Link> </MenuItem>
+                            </div>
+                          }
                         </MenuList>
                       </Paper>
                     </Grow>
@@ -96,9 +102,20 @@ class Header extends React.Component {
 
         </Toolbar>
       </div>
-    </header>);
+    </header>)
   }
 }
 
+function mapStateToProps(state) {
+  return {
+    sign: state,
+  }
+}
 
-export default withStyles(styles)(Header);
+function mapDispatchToProps(dispatch) {
+  return {
+    signOut: () => dispatch(signOut()),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Header))

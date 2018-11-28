@@ -45,7 +45,7 @@ class SignUp extends Component {
   onRepeatCheck = () => {
 
     if (this.state.password === this.state.repeatPassword) {
-      this.props.signUp(this.state.mail, this.state.password)
+      this.props.signUp(this.state.mail, this.state.password, this.props.history)
     } else {
       console.log('The password isn\'t correct. Please try again')
     }
@@ -68,7 +68,7 @@ class SignUp extends Component {
     return (
       <div>
         <Grid container justify="center" className={classes.root}>
-          <Grid item xs={12} sm={12} md={8}>
+          <Grid item xs={12} sm={12} md={4}>
             <Card>
               <CardHeader title="Register with Booking App"
                           subheader="Please enter your email and password"
@@ -131,7 +131,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    signUp: (userName, userPassword) => dispatch(signUp(userName, userPassword)),
+    signUp: (userName, userPassword, history) => dispatch(signUp(userName, userPassword, history)),
   }
 }
 
