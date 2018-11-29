@@ -53,12 +53,12 @@ const styles = theme => ({
 class MyTable extends React.Component {
   state = { data: LocalStorage.get(this.props.booked) || [], message: '' }
 
-  handleClick = (index, value) => {
+  handleClick = (roomColor, value) => {
     const arr = this.state.data;
     if (localStorage.user !== '')  {
-    const obj = { index, value, date: this.props.date, user: localStorage.user }
+    const obj = { roomColor, value, date: this.props.date, user: localStorage.user }
     const number = arr.findIndex((item) => {
-      if (item.index === index && item.value === value && item.date === this.props.date) {
+      if (item.roomColor === roomColor && item.value === value && item.date === this.props.date) {
         return item;
       }
     });
@@ -79,11 +79,11 @@ class MyTable extends React.Component {
     }
   }
 
-  check = (index, value) => {
+  check = (roomColor, value) => {
     const arrayToCheck = this.state.data;
     let isCheck = false;
     arrayToCheck.forEach((item) => {
-      if (item.index === index && item.value === value && item.date === this.props.date ) {
+      if (item.roomColor === roomColor && item.value === value && item.date === this.props.date ) {
         isCheck = !isCheck;
       }
     });
@@ -111,8 +111,8 @@ class MyTable extends React.Component {
               {row.arrayWithTime.map((item, index) => {
                 return (
                   <div key={index}>
-                   <Button variant='contained' color={this.check(row.id, item) ? 'secondary' : 'primary'}
-                            onClick={localStorage.user ? () => this.handleClick(row.id, item) : null}>
+                   <Button variant='contained' color={this.check(row.roomColor, item) ? 'secondary' : 'primary'}
+                            onClick={localStorage.user ? () => this.handleClick(row.roomColor,  item) : null}>
                       {item}
                     </Button>
                   </div>);
