@@ -55,7 +55,8 @@ class MyTable extends React.Component {
 
   handleClick = (roomColor, value) => {
     const arr = this.state.data;
-    if (localStorage.user !== '')  {
+    console.log(localStorage.length)
+    if (localStorage.length !== 0 && localStorage.user !== '')  {
     const obj = { roomColor, value, date: this.props.date, user: localStorage.user }
     const number = arr.findIndex((item) => {
       if (item.roomColor === roomColor && item.value === value && item.date === this.props.date) {
@@ -67,7 +68,7 @@ class MyTable extends React.Component {
         arr.splice(number, 1);
       }
       else{
-        this.setState({message: "The room is booked by another user."})
+        this.setState({ message: "The room is booked by another user." })
       }
     } else {
       arr.push(obj);
@@ -75,7 +76,7 @@ class MyTable extends React.Component {
     this.setState({ data: arr });
     LocalStorage.put(this.props.booked, arr);
    } else {
-      console.log("User is not defined")
+      this.setState({ message: "User is not logged in." })
     }
   }
 
@@ -112,7 +113,7 @@ class MyTable extends React.Component {
                 return (
                   <div key={index}>
                    <Button variant='contained' color={this.check(row.roomColor, item) ? 'secondary' : 'primary'}
-                            onClick={localStorage.user ? () => this.handleClick(row.roomColor,  item) : null}>
+                            onClick={ () => this.handleClick(row.roomColor,  item)}>
                       {item}
                     </Button>
                   </div>);
